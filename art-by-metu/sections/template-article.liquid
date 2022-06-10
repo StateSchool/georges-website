@@ -1,28 +1,36 @@
-<article class="md:pt-5">
+<article class="md:pt-5" itemscope itemtype="http://schema.org/BlogPosting">
     {% for block in section.blocks %}
         {% case block.type %}
             {% when 'article_title' %}
                 <div class="grid grid-cols-1 py-5 md:flex justify-between md:px-14 xl:px-24">
            
-                        <h1 class="text-white text-3xl py-5 lowercase md:text-[100px] ">{{article.title}}</h1>
+                        <h1 class="text-3xl py-5 lowercase md:text-[100px] ">{{article.title}}</h1>
                     {% when 'featured_image' %}
-                        <img src="{{article.image | img_url: '800x800'}}" alt="{{article.image.alt}}" class=" md:pr-5">
+                    {% if article.image!= blank %}
+                        <img itemprop="image" src="{{article.image | img_url: '800x800'}}" alt="{{article.image.alt}}" class=" md:pr-5">
+                        {% else %}
+                            {% assign placeholder_image = 'lifestyle-2' %}
+                            {{ placeholder_image | placeholder_svg_tag: '800x800'}}
+                    {% endif %}
+                       
                  </div>    
              
                  {% when 'article_author' %}
-                     <div class="py-3 md:px-14">
+                     <div class="py-3 md:px-14" itemscope itemtype="http://schema.org/Person">
                         {% if section.settings.enable_author %}
-                             <small class="text-white">{{article.author}}</small> 
+                             <small class="">{{article.author}}</small> 
                         {% endif %}
                 {% when 'published_date' %}
                         {% if section.settings.enable_published_date %}
-                    |       <time datetme="{{article.published_at | date: '%Y-%m-%d'}}" class="text-white text-xs">{{article.published_at | date: '%Y-%m-%d'}}</time>  
+                    |       <time itemprop="datePublished dateCreated" datetme="{{article.published_at | date: '%Y-%m-%d'}}" class="text-xs">{{article.published_at | date: '%Y-%m-%d'}}</time>  
                         {% endif %} 
                     </div>
            
                 <div class="md:px-14 xl:px-24">
                     {% when 'article_content' %}
-                <div class="text-white">{{article.content}}</div>
+                <div class="" itemprop="articleBody">
+                    {{article.content}}
+                </div>
                 </div>
             
             {% else %}
@@ -34,15 +42,15 @@
  <hr class="mt-14 text-gray-500 w-32 md:w-48 text-center">
 
 {% if blog.comments_enabled? %}
-    <div id="comments" class="my-8 lowercase">
+    <div id="comments" class="mb-8 mt-20 lowercase md:mt-40">
         {% if article.comments_count > 0 %}
            <div class="flex-1 items-center justify-center mx-auto md:w-1/2 md:px-4">
-               <h1 class="text-lg mb-6 font-medium text-white md:px-4">comments</h1>
+               <h1 class="text-lg mb-6 font-medium  md:px-4">comments</h1>
                {% paginate article.comments by 5 %}
                    {% for comment in article.comments %}
-                       <div class="flex-1 border-t-2 border-white my-4 px-4 py-2 leading-relaxed text-white">
-                           <span class="comment-author">{{comment.author}}</span> <span class="text-xs text-white">{{comment.created_at | date: format: 'default'}}</span>
-                           <p class="text-small text-white">{{comment.content}}</p>
+                       <div class="flex-1 border-t-2 border-white my-4 px-4 py-2 leading-relaxed ">
+                           <span class="comment-author">{{comment.author}}</span> <span class="text-xs ">{{comment.created_at | date: format: 'default'}}</span>
+                           <p class="text-small ">{{comment.content}}</p>
                        </div>
                    {% endfor %}
 
@@ -53,33 +61,55 @@
            </div>
         {% endif %}
     </div>
-    <div id="comment_form" class="mb-8 text-white mt-14 md:mt-28">
+    <div id="comment_form" class="mb-8  mt-14 md:mt-28">
 
         {%form 'new_comment', article %}
-            <div class="flex-1 mx-auto items-center justify-center max-w-4xl  text-white">
+            <div class="flex-1 mx-auto items-center justify-center max-w-4xl ">
 
                 {% if form.errors %}
-                        sorry, your comment was not posted 
+                        
+                        <div class="border p-5">
+                            <div class="flex flex-row items-center w-full my-3">
+                            
+                                <div class="text-sm font-medium ml-3">
+                                    sorry, your comment was not posted 
+                                </div>
+                            </div>
+                            <ul class="px-4 mb-3 ml-7 list-decimal">
+                                {% for error in form.errors %}
+                                <li>
+                                    <span>{{ form.errors.messages[error] }}</span>
+                                </li>
+                                    
+                                {% endfor %}
+                            </ul>
+                        </div>
                     {% elsif posted.successfully? %}
-                        your comment has been posted successfully.
+                    <div class="flex flex-row items-center w-full my-3 p-5">
+                    
+                        <div class="text-sm font-medium ml-3">
+                            your comment has been posted successfully.
+                        </div>
+                    </div>
+                        
                 {% endif %}
 
                 <div class="px-1 md:flex mb-3">
                     <div class="md:px-3 md:w-1/2">
-                        <input type="text" name="comment[author]" id="comment_author" placeholder="name" class="bg-transparent text-white w-full  py-3 border-b-2 border-white mb-3 focus:outline-none" required>
+                        <input type="text" name="comment[author]" id="comment_author" placeholder="name" class="bg-transparent  w-full  py-3 border-b-2 border-white mb-3 focus:outline-none" required>
                     </div>
                     <div class="md:px-3 md:w-1/2">
-                        <input type="email" name="comment[email]" id="comment_email" placeholder="email" class="bg-transparent text-white w-full  py-3 border-b-2 border-white mb-3 focus:outline-none" required>
+                        <input type="email" name="comment[email]" id="comment_email" placeholder="email" class="bg-transparent  w-full  py-3 border-b-2 border-white mb-3 focus:outline-none" required>
                     </div>
                 </div>
                 <div class="px-1 md:flex mb-3">
                     <div class="md:w-full md:px-3">
-                        <input type="text" name="comment[body]" id="comment_body" placeholder="comment" class="bg-transparent text-white w-full  py-3 border-b-2 border-white mb-3 focus:outline-none" required>
+                        <input type="text" name="comment[body]" id="comment_body" placeholder="comment" class="bg-transparent  w-full  py-3 border-b-2 border-white mb-3 focus:outline-none" required>
                     </div>
                 </div>
                 <div class="px-1 md:flex mb-3">
                     <div class="md:w-full md:px-3 mt-5">
-                        <input type="submit" value="post comment" class="w-full cursor-crosshair px-4 py-3 border-2 border-white text-white hover:text-gray-400">
+                        <input type="submit" value="post comment" class="w-full cursor-crosshair px-4 py-3 border-2 border-white  hover:text-gray-400">
                     </div>
                 </div>
             </div>
@@ -88,6 +118,34 @@
     </div>
 {% endif %}
 
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "articleBody": {{ article.content | strip_html | json }},
+    {% if article.excerpt != blank %}
+        "description": {{ article.excerpt | strip_html | json }},
+    {% endif %}
+    {% if article.image %}
+        "image": [
+            {{ article.image | img_url: "medium" | prepend: 'https:' | json }}
+        ],
+    {% endif %}
+    "datePublished": {{ article.published_at | date: format: "default" | json }},
+    "dateCreated": {{ article.created_at | date: format: "default" | json }},
+    "author": {
+        "@type": "person",
+        "name": {{ article.author | json }}
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": {{ shop.name | json}}
+    }
+}
+</script>
 
 
 {% schema %}
