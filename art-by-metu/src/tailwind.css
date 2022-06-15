@@ -3,3 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.customer-register{
+    @apply relative block w-full px-3 py-2 border placeholder:text-xs text-gray-500
+}

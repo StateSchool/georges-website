@@ -21,7 +21,7 @@
 
                             {% if article.excerpt.size > 0 %}
 
-                            <p>{{article.excerpt | strip_html | | truncatewords: 15}}</p>
+                            <p>{{article.excerpt | strip_html | truncatewords: 15}}</p>
 
                             {% else %}
 
@@ -29,7 +29,7 @@
 
                             {% endif %}
 
-                            <a href="{{article.url}}" class="font-medium text-blue-600 hover: text-blue-800 my-4 ">{{section.settings.blog_read_more}}</a>
+                            <a href="{{article.url}}" class="font-medium text-blue-600 hover:text-blue-800 my-4 ">{{section.settings.blog_read_more}}</a>
                         </div>
                         
                     </div>
