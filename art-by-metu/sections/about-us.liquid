@@ -1,0 +1,40 @@
+<div>
+
+
+<h1 class="text-3xl mb-4 lowercase text-pink-200 mt-10">{{ page.title}}</h1>
+
+        <div>
+        {% if section.settings.show_picture %}
+            <div>
+                <div>
+                <img src="{{ section.settings.page_picture | img_url: '400x400' }}" alt="{{ media.preview_image.alt }}" class="  " >
+                </div>
+            </div>
+        {% endif %}
+        <div class="pr-1 mt-10 md:pr-10"> {{page.content}}</div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Page Picture",
+        "settings": [
+                   
+                    {
+                        "type": "image_picker",
+                        "id": "page_picture",
+                        "label": "Page Picture"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "show_picture",
+                        "label": "Show Picture",
+                        "default": false
+                    }
+                 
+        
+    ]
+    }
+{% endschema %}
+
+

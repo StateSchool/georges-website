@@ -1,7 +1,7 @@
 <div class="max-w-6xl mx-auto p-4 py-12" x-data="{new_address: false}" x-cloak>
     <div class="flex flex-col md:flex-row items-center justify-between my-5 gap-4">
-    <button x-on:click="new_address = true" type="button" class="text-white text-medium font-medium hover:text-gray-400 px-6 py-2 underline address-btn lowercase">+ New address</button>
-    <a href="{{routes.account_url}}" class="back-to-account text-medium font-medium hover:text-blue-900  underline lowercase">Back to account</a>
+    <button x-on:click="new_address = true" type="button" class="text-medium font-medium hover:text-gray-400 px-6 py-2 underline address-btn lowercase text-pink-200">New address</button>
+    <a href="{{routes.account_url}}" class="text-pink-200 text-medium font-medium hover:text-gray-400 underline lowercase">Back to account</a>
     </div>
 
     <div x-show="new_address" class="h-full w-full fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto z-50">
@@ -115,7 +115,7 @@
                         <label for="address_default_address_{{ form.id }}" class="lowercase text-gray-700 text-xs font-medium mb-2">Set as default address</label>
                          </div>
                     <div class="flex flex-row gap-2">
-                        <button type="submit" class="w-full font-medium text-white hover:bg-gray-900 px-4 py-2 lowercase bg-pink-200">Create Address</button>
+                        <button type="submit" class="w-full font-medium text-white hover:bg-gray-900 px-4 py-2 lowercase bg-pink-300">Create Address</button>
                 
                     </div>
             {% endform %}
@@ -130,14 +130,14 @@
                 <div x-data="{address_{{address.id }}: false }">
                     <div class="relative flex flex-col text-center border p-2">
                         {% if address == customer.default_address %}
-                            <span class="text-xs font-medium text-white bg-blue-900 px-4 py-2 lowercase">Default</span>
+                            <span class="text-xs font-medium text-white bg-green-700 px-4 py-2 lowercase">Default</span>
                         {% endif %}
                         <div class="my-8 h-full">
                             {{ address | format_address }}
                         </div>
                         <div class="flex flex-row gap-2">
-                            <button  x-on:click="address_{{ address.id }} = true" class="w-full text-xs text-white hover:bg-gray-900 font-medium py-2 edit-btn lowercase ">Edit</button>
-                            <button  class="w-full text-xs font-medium text-gray-700 border py-2 lowercase" data-delete-address
+                            <button  x-on:click="address_{{ address.id }} = true" class="w-full text-xs text-white bg-pink-300 hover:bg-gray-900 font-medium py-2 edit-btn lowercase ">Edit</button>
+                            <button  class="w-full text-xs font-medium text-white py-2 lowercase bg-gray-400 hover:bg-gray-900 " data-delete-address
                             data-url="{{address.url}}">Delete</button>
                         </div>
 
