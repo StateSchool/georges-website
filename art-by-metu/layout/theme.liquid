@@ -37,7 +37,17 @@
   
 
   <main role="main" class="text-white">
+
+     {% if request.path contains '/pages/about' %}
+          {%section 'about-us'%}
+          
+    {%else %}
     {{ content_for_layout }}
+      {% endif %}
+
+
+
+
   </main>
 
 
