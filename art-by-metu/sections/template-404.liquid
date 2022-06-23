@@ -9,8 +9,8 @@
         {% else %}
         {% assign shop_url = section.settings.button_url %}
         {% endif %}
-        <a href="{{ shop_ url }}"
-            class="px-4 inline py-2 text-base shadow bg-green-600 hover:bg-green-800 text-white">{{
+        <a href="{{ shop_url }}"
+            class="px-4 inline py-2 text-base shadow bg-pink-300 hover:bg-pink-800">{{
             section.settings.button_label }}</a>
     </div>
 </div>
@@ -41,7 +41,7 @@
 },
 {
 "type": "url",
-"url": "button_url",
+"id": "button_url",
 "label": "Button URL"
 }
 ]
