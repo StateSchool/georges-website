@@ -1,21 +1,71 @@
-<div class="div px-4 py-8">
+<div class="px-4 py-8">
   {% paginate collection.products by section.settings.number_of_products_per_page %}
     {% comment %} <h1 class="text-3xl text-center lowercase text-pink-200">{{collection.title}}</h1> {% endcomment %}
 
     <div class="max-w-6xl mx-auto">
+
         <h1 class="pl-3 py-3 text-2xl text-pink-200">artworks</h1>
+        <div class="px-3">
+            <ul class="list-none flex space-x-10">
+                <li class="hover:text-pink-200">
+                    <a href="{{routes.all_products_collection_url}}">All</a>
+                </li>
+                <li class="hover:text-pink-200">
+                    <a href="/collections/traditional">Traditional</a>
+                </li>
+                <li class="hover:text-pink-200">
+                    <a href="/collections/digital">Digital</a>
+                </li>
+            </ul>
+        </div>
+       
+     
+
+
         <div class="grid grid-cols-1 md:grid-cols-3">
+            
         {% for product in collection.products %}
+
+
+        
            {% render 'product-card' , product_product: product %}
             {%else%}
             <p class="text-gray-500"> there are no products inside of this collection </p>
         {% endfor %}
         </div>
+
+       <!-- <div class="">
+     {% for block in section.blocks %}
+                    {% assign item = block.settings %}
+                        {% if block.type  == "link_list" %}
+                            {% assign collections_page_menu_linklist = item.menu %}
+                                <ul class="hidden md:flex list-none">
+                                    {% for link in linklists[collections_page_menu_linklist].links %}
+                                        <li>
+                                           <a href="{{ link.url }}" class="text-white pl-2 mr-4 hover:text-pink-200">{{ link.title | escape  }}</a>
+                                         </li>
+                            
+                                     {% endfor %}
+
+                                </ul>
+                                        
+                         {% endif %}
+                {% endfor %}   
+</div>  -->
+
     </div>
     
+
+
+
     {%render 'pagination', pagination: paginate %}
     {% endpaginate %}  
+
+
+
 </div>
+
+
 
 
 {% schema %}
@@ -28,6 +78,8 @@
             "default": 12,
             "label": "Number of Products Per Page"
         }
-    ]
+    ]    
+    
 }
+
 {% endschema %}
