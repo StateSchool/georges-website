@@ -1,0 +1,11 @@
+{
+    "sections": {
+        "full-banner":{
+            "type": "full-banner",
+            "settings": {
+                "full-banner": "all"
+            }
+        }
+    },
+    "order": ["full-banner"]
+}
