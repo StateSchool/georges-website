@@ -1,13 +1,13 @@
 <div class="container mx-auto">
 
-    {% paginate search.results by 4 %}
+    {% paginate search.results by 12 %}
     <h1 class="text-3xl mt-4 text-center lowercase text-pink-200">Search Results</h1>
     
     {% if search.performed %}
         {% if search.results.size > 0 %}
         <div class="max-w-6xl mx-auto">
             <p class="text-center mb-10 mt-4 text-sm text-gray-400">{{search.results.size}} results for the search term: {{search.terms | escape }}</p>
-            <div class="grid grid-cols-1 grid-4 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
                 {% for item in search.results %}
                 {% case item.object_type %}
                      {% when 'product' %}

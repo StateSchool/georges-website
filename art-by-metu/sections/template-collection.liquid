@@ -19,39 +19,14 @@
             </ul>
         </div>
        
-     
-
-
         <div class="grid grid-cols-1 md:grid-cols-3">
             
         {% for product in collection.products %}
-
-
-        
-           {% render 'product-card' , product_product: product %}
+           {% render 'product-card', product_product: product %}
             {%else%}
             <p class="text-gray-500"> there are no products inside of this collection </p>
         {% endfor %}
         </div>
-
-       <!-- <div class="">
-     {% for block in section.blocks %}
-                    {% assign item = block.settings %}
-                        {% if block.type  == "link_list" %}
-                            {% assign collections_page_menu_linklist = item.menu %}
-                                <ul class="hidden md:flex list-none">
-                                    {% for link in linklists[collections_page_menu_linklist].links %}
-                                        <li>
-                                           <a href="{{ link.url }}" class="text-white pl-2 mr-4 hover:text-pink-200">{{ link.title | escape  }}</a>
-                                         </li>
-                            
-                                     {% endfor %}
-
-                                </ul>
-                                        
-                         {% endif %}
-                {% endfor %}   
-</div>  -->
 
     </div>
     
