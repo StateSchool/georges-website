@@ -12,6 +12,9 @@ module.exports = {
     extend: {
       fontFamily: {
         raleway:["raleway"]
+      },
+      height: {
+        '94': '22rem'
       }
     },
   },

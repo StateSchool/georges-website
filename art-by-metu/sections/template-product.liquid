@@ -1,15 +1,89 @@
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+<style>
+
+    .swiper {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+      }
+
+      .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 600px;
+        height: 800px;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+      }
+
+      .swiper-pagination-bullet{
+        display: none;
+      }
+
+      @media screen and (max-width:700px) {
+          .swiper-slide{
+            width: 300px;
+            height: 400px;
+           
+          }
+      }
+</style>
+
 <div class="max-w-6xl mx-auto my-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="grid grid-cols-1 gap-3">
         <div class="product--medias">
-            <div class="hidden md:block">
+            <!-- <div class="hidden md:block">
                 {% for media in product.media %}
                     <div class="h-100 overflow-hidden p-2">
                         {% render 'product-media', media: media %}
                     </div>
                 {% endfor %}
+            </div> -->
+
+            <div class="">
+                <div class="swiper mySwiper ">
+                    <div class="swiper-wrapper">
+                        {% for media in product.media %}
+                            <div class="swiper-slide">
+                                <div class="h-full md:h-full overflow-hidden p-2">
+                                    {%render 'product-media', media: media%}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                        <div class="swiper-pagination"></div>
+
+                </div>
             </div>
+
         </div>
 
         <div class="product--information"></div>
     </div>
 </div>
+
+ <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+      var swiper = new Swiper(".mySwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+          rotate: 0,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+        },
+      });
+    </script>
