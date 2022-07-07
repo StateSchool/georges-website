@@ -11,7 +11,7 @@
 <div class="relative" x-data="{ mobileMenuOpen: false, searchBarOpen: false, navBarOpen: false }" x-cloak>
     <div class="relative pt-2 ">
         <div class="mx-auto sm:px-6">
-            <div class="flex justify-between items-center pt-2 pb-2 pr-1 md:justify-start md:space-x-10 -mt-2 ">
+            <div class="flex justify-between items-center pt-2 pb-2 px-4 md:justify-start md:space-x-10 -mt-2 ">
 
                 <div class="flex justify-between items-center -ml-1">
                     <!------STORE NAME/LOGO------>
@@ -113,7 +113,7 @@
 
 
                 <!------CART BUTTON / ACCOUNT LINKS IF ENABLED------->
-                <div class="hidden md:flex item-center justify-end md:flex-1 space-x-5">
+                <div class="hidden md:flex item-center justify-end md:flex-1 space-x-5 px-4">
                     <button x-on:click="searchBarOpen = true" type="button"
                         class="whitespace-nowrap text-sm text-pink-200">
                         {%render 'icon-search'%}
@@ -146,7 +146,7 @@
                     x-transition:leave="transition ease-out-in duration-500"
                     x-transition:leave-start="opacity-100 transform scale-x-100 translate-x-0"
                     x-transition:leave-end="opacity-100 transform scale-x-0 -translate-x-1/2"
-                    class="absolute top-0 inset-x-0 z-100 origin-left bg-black md:hidden">
+                    class="absolute top-0 inset-x-0 z-100  origin-left bg-black md:hidden">
                     <div class="  w-full h-screen hamburger-container z-100 ">
                         <div class="pb-3 pl-2 pr-2 pt-2 divide-y-2 divide-gray-50">
                             <!---MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON-->
@@ -278,7 +278,7 @@
         </div>
          <div>
             
-            <div class="absolute top-0 right-0 bg-black " x-show="searchBarOpen" >
+            <div class="absolute top-0 right-0 bg-black px-4" x-show="searchBarOpen" >
                 <form action="{{ routes.search_url }}" method="get" class="flex-auto">
                     <div class="relative top-0 flex justify-end items-center text-pink-200 px-1 border-b-2 border-white">
                         <input type="search" name="q" placeholder="search"

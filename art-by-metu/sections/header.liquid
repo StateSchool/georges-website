@@ -11,7 +11,7 @@
 <div class="relative" x-data="{ mobileMenuOpen: false, searchBarOpen: false }" x-cloak>
     <div class="relative pt-2 ">
         <div class="mx-auto sm:px-6">
-            <div class="flex justify-between items-center pt-2 pb-2 pr-1 md:justify-start md:space-x-10 -mt-2 ">
+            <div class="flex justify-between items-center pt-2 pb-2 px-4 md:justify-start md:space-x-10 -mt-2 ">
 
                 <div class="flex justify-between items-center -ml-1">
                     <!------STORE NAME/LOGO------>
@@ -74,7 +74,7 @@
 
 
 <!------HAMBURGER MENU--------->
-
+  
                     <button x-on:click="mobileMenuOpen = true; searchBarOpen = false" type="button"
                             class="pl-2 ml-3 inline-flex items-center justify-center mt-2 focus:outline-none md:hidden">
                             {%render "double-chevron-right" %}
@@ -95,7 +95,7 @@
                         </div>
 
                         
-                        <button x-on:click="searchBarOpen = true" type="button" class="px-1">
+                        <button x-on:click="searchBarOpen = true" type="button" class="px-4">
                             {%render 'icon-search-mobile'%}
                         </button>
                         
@@ -106,8 +106,8 @@
 
 
 
-                <!------CART BUTTON / ACCOUNT LINKS IF ENABLED------->
-                <div class="hidden md:flex item-center justify-end md:flex-1 space-x-5">
+                <!------CART BUTTON / ACCOUNT LINKS IF ENABLED-------> 
+                <div class="hidden md:flex item-center justify-end md:flex-1 space-x-5 px-4">
                     <button x-on:click="searchBarOpen = true" type="button"
                         class="whitespace-nowrap text-sm text-pink-200 hover:text-white">
                         {%render 'icon-search'%}
@@ -134,6 +134,7 @@
                 </div>
 
                 <!----HAMBURGER MENU CONTAINER------>
+
                 <div x-show="mobileMenuOpen" x-transition:enter="transition ease-in duration-200"
                     x-transition:enter-start="opacity-100 transform scale-x-100 -translate-x-1/2"
                     x-transition:enter-end="opacity-100 transform scale-x-100 translate-x-0"
@@ -141,7 +142,7 @@
                     x-transition:leave-start="opacity-100 transform scale-x-100 translate-x-0"
                     x-transition:leave-end="opacity-100 transform scale-x-0 -translate-x-1/2"
                     class="absolute top-0 inset-x-0 z-100 origin-left bg-black md:hidden">
-                    <div class="  w-full h-screen hamburger-container z-100 ">
+                    <div class="  w-full h-screen hamburger-container z-100 bg-black" >
                         <div class="pb-3 pl-2 pr-2 pt-2 divide-y-2 divide-gray-50">
                             <!---MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON-->
                             <div class="flex items-center justify-between pb-3 px-2">
@@ -268,15 +269,16 @@
                 </div>
 
 
+                
             </div>
         </div>
       <div>
             
-            <div class="absolute top-0 right-0 bg-black " x-show="searchBarOpen" >
+            <div class="absolute top-0 right-0 bg-black px-4 " x-show="searchBarOpen" >
                 <form action="{{ routes.search_url }}" method="get" class="flex-auto">
                     <div class="relative top-0 flex justify-end text-pink-200 px-1 border-b-2 border-white">
                         <input type="search" name="q" placeholder="search"
-                            class="w-full relative bg-black h-10  pr-10  text-sm focus:outline-none">
+                            class="w-full relative bg-black h-10  pr-10 text-sm focus:outline-none">
                                 <button type="button" x-on:click="searchBarOpen = false"
                                                 class="absolute top-0 right-0 ml-40 mt-3 text-pink-200 z-20 items-center md:ml-5">
                                                 {% render 'icon-close' %}

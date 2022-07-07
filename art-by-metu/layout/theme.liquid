@@ -19,24 +19,27 @@
   </style>
 
 </head>
-<body class="bg-black px-4 py-3 mx-auto font-raleway md:px-10">
-
-  {% if template.name == 'index' %}
+<body class="bg-black mx-auto py-3 font-raleway ">
+  
+  <div class="sticky absolute top-0 left-0 right-0 z-10 bg-black">
+     {% if template.name == 'index' %}
     {% section 'homepage-header' %}
   {% endif %}
   
 {% if template.name != 'index' %}
   {% section 'header' %}
 {% endif %}
+  </div>
+
+  {% section 'announcement-bar' %}
+ 
 
 
 
 
 
 
-  
-
-  <main role="main" class="text-white lowercase">
+  <main role="main" class="text-white lowercase px-4 md:px-10">
 
      {% if request.path contains '/pages/about' %}
           {%section 'about-us'%}
