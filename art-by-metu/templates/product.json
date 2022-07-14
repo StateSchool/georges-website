@@ -1,7 +1,26 @@
 {
     "sections": {
         "template": {
-            "type": "template-product"
+            "type": "template-product",
+            "blocks": {
+              "title": { "type": "title" },
+              "dimensions": {"type": "dimensions"},
+              "variant_selector": { "type": "variant_selector" },
+              "price": { "type": "price" },
+              "quantity": { "type": "quantity" },
+              "checkout_button": { "type": "checkout_button" },
+              "description": { "type": "description" }
+            
+            },
+            "block_order":[
+                "title",
+                "dimensions",
+                "variant_selector",
+                "price",
+                "quantity",
+                "checkout_button",
+                "description"
+            ]
         }
     },
     "order": ["template"]

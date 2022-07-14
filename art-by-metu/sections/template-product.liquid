@@ -1,6 +1,28 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
+{% assign selected_variant = product.selected_or_first_available_variant %}
+
+{% assign all_tags_string = product.tags | join: '&!spacer!&' %}
+
+  {% if all_tags_string contains 'width' and all_tags_string contains 'length' %}
+  
+    {% if all_tags_string contains 'width' %}
+      {% assign width_split = all_tags_string | split: 'width' %}
+      {% assign width_spacer_split = width_split[1] | split: '&!spacer!&' %}
+      {% assign width_value = width_spacer_split[0] | plus: 0 %}
+
+    {% endif %}
+
+    {% if all_tags_string contains 'length' %}
+      {% assign length_split = all_tags_string | split: 'length' %}
+      {% assign length_spacer_split = length_split[1] | split: '&!spacer!&' %}
+      {% assign length_value = length_spacer_split[0] | plus: 0 %}
+
+    {% endif %}
+
+  {% endif %}
+
 <style>
 
     .swiper {
@@ -25,6 +47,32 @@
         display: none;
       }
 
+      .variant-option + label { 
+        padding-right: 15px;
+        cursor: pointer;
+      }
+
+     .variant-option +label:hover{
+        color: pink;
+    
+      }
+
+      .variant-option:checked + label {
+        text-decoration: underline;
+        text-decoration-color: pink;
+  
+      }
+
+      .variant-option[disabled] + label {
+        opacity: 0.5;  
+      }
+
+      .variant-option {
+         display: none;
+      }
+
+
+
       @media screen and (max-width:700px) {
           .swiper-slide{
             width: 300px;
@@ -35,16 +83,9 @@
 </style>
 
 <div class="max-w-6xl mx-auto my-8">
+  <h1 class="text-lg text-pink-200">{{product.title}}</h1>
     <div class="grid grid-cols-1 gap-3">
         <div class="product--medias">
-            <!-- <div class="hidden md:block">
-                {% for media in product.media %}
-                    <div class="h-100 overflow-hidden p-2">
-                        {% render 'product-media', media: media %}
-                    </div>
-                {% endfor %}
-            </div> -->
-
             <div class="">
                 <div class="swiper mySwiper ">
                     <div class="swiper-wrapper">
@@ -63,9 +104,177 @@
 
         </div>
 
-        <div class="product--information"></div>
+        <div class="product--information">
+          {% form 'product', product, id: 'product-form', novalidate: 'novalidate' %}
+            <input type="hidden" name="id" value="{{ selected_variant.id }}">
+
+            {% for block in section.blocks %}
+              {% case block.type %}
+
+                {% when 'title' %}
+                    <div class="my-3">
+                      <h1 class="text-3xl text-pink-200">{{ product.title }}</h1>
+                    </div>
+
+
+                {% when 'dimensions' %}
+                 {% if all_tags_string contains 'width' and all_tags_string contains 'length' %}
+                    <div class="my-3" id="product-dimensions">
+                     <p> Dimensions: <span class="pl-3" id="product-width"></span><span class="text-xs">cm</span>  x <span class="" id="product-length"></span><span class="text-xs">cm</span> </p>
+                      
+                    </div>
+                  {% endif %}
+                {% when 'variant_selector' %}
+                  <div class="my-3">
+                    {% unless product.has_only_default_variant %}
+                        {{ variant.image.src }}
+                            <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
+                                {% for option in product.options_with_values %}
+                                    <div class="my-8">
+                                          {%- for variant in product.variants -%}         
+                                              <input 
+                                                  type="radio" 
+                                                  name="id" 
+                                                  class="variant-option"
+                                                  value="{{ variant.id }}" 
+                                                  id="variant-option-{{ variant.id }}" 
+                                                  {% unless variant.available %} disabled{% endunless %}
+                                                    {% if product.selected_variant.id == variant.id %} checked{% endif %}
+                                                      >
+                                                  <label for="variant-option-{{ variant.id }}">{{ variant.title }}</label>
+                                            {%- endfor -%}
+
+                                    </div>
+
+                                            <script type="application/json">
+                                                {{ product.variants | json }}
+                                            </script>
+
+                                        {% endfor %}
+                                        </variant-selector>
+                                {% endunless %}
+                    </div>
+
+                        {% when 'price' %}
+                            <div class="my-3" id="price-{{ section.id }}">
+                                <span class="text-base line-through">{{ selected_variant.compare_at_price | money }}</span>
+                                <span class="text-lg">{{ selected_variant.price | money }}</span>
+                                {% if selected_variant.price < selected_variant.compare_at_price %}
+                                      <span class="px-5 py-1 text-sm font-bold bg-red-500 rounded-full text-white mx-4">sale</span>
+                                {% endif %} 
+                           </div>  
+
+                         {% when 'quantity' %}
+                            <div class="my-3 flex items-center ">
+                                  <label for="quantity-{{ section.id }}">Quantity</label>
+                                      <div class="my-2">
+                                        <input type="number" name="quantity" id="Quantity-{{ section.id }}" value="1" min="1" class=" pl-5 w-14 bg-transparent" >
+                                      </div>
+                             </div>
+
+
+                        {% when 'checkout_button' %}
+                            <div class="my-3">
+                              <button type="submit" name="add" class="py-4 underline hover:text-pink-200" 
+                                  {% if selected_variant.available == false %}
+                                    disabled
+                                  {% endif %}
+                                  >
+                                
+
+                                  {% if selected_variant.available == false %}
+                                    sold out
+                                    {% else %}
+                                      add to bag
+                                  {% endif %}
+                              </button>
+                             </div>
+
+                       {% when 'description' %}
+                          <div class="my-3">
+                            <p>{{product.description}}</p>
+                          </div>    
+                {% else %}
+                  
+              {% endcase %}
+
+            {% endfor %}
+          
+          {% endform %}
+        </div>
     </div>
 </div>
+
+
+<script>
+    class VariantSelector extends HTMLElement{
+        constructor(){
+            super();
+            this.addEventListener("change", this.onVariantChange)
+        }
+        onVariantChange(){
+                this.getSelectedOptions();
+                this.getSelectedVariant();
+
+                if(this.currentVariant){
+                    this.updateURL();      
+                    this.updateFormID(); 
+                    this.updatePrice();         
+                }
+        }
+
+        getSelectedOptions(){
+            this.options = Array.from(this.querySelectorAll('select'), (select) => select.value)
+            console.log(this.options)
+        }
+
+        getVariantJSON(){
+            this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent)
+            return this.variantData
+        }
+
+        getSelectedVariant(){
+            this.currentVariant = this.getVariantJSON().find((variant) => {
+                    const findings = !variant.options.map(
+                        (option, index) => {
+                           return this.options[index] === option;
+                        }
+                    ).includes(false);
+
+                    if (findings) return variant
+                }
+            );
+        }
+
+        updateURL(){
+            if(!this.currentVariant) return;
+            window.history.replaceState({}, '', `${this.dataset.url}?variant=${this.currentVariant.id}` )
+        }
+
+        updateFormID(){
+            const form_input = document.querySelector("#product-form").querySelector('input[name="id"]');
+            form_input.value = this.currentVariant.id;
+        }
+
+        updatePrice(){
+            fetch(`${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`)
+            .then((response) => response.text())
+            .then((responseText) => {
+                const id = `price-${this.dataset.section}`
+                const html = new DOMParser().parseFromString(responseText, 'text/html');
+
+                const oldPrice = document.getElementById(id);
+                const newPrice = html.getElementById(id);
+
+                if(oldPrice && newPrice) oldPrice.innerHTML = newPrice.innerHTML;
+            })
+        }
+    }
+
+    customElements.define("variant-selector", VariantSelector)
+
+</script>
+
 
  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
@@ -87,3 +296,58 @@
         },
       });
     </script>
+
+ {% if all_tags_string contains 'width' and all_tags_string contains 'length' %}
+
+    <script>
+
+    document.getElementById("product-width").innerHTML = ({{width_value}})
+    document.getElementById("product-length").innerHTML = ({{length_value}})
+
+    </script>
+ {% endif %}
+
+{% schema %}
+{
+  "name": "Product",
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },  
+    {
+      
+      "type": "dimensions",
+      "name": "Dimensions",
+      "limit": 1
+      
+    },
+    {
+      "type": "variant_selector",
+      "name": "Variant Selector",
+      "limit": 1
+    },  
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },  
+    {
+      "type": "quantity",
+      "name": "Quantity",
+      "limit": 1
+    },  
+    {
+      "type": "checkout_button",
+      "name": "Checkout Button",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}
