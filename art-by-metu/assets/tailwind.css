@@ -655,6 +655,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 0.25rem;
 }
 
+.my-0{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.-my-0{
+  margin-top: -0px;
+  margin-bottom: -0px;
+}
+
 .mb-4{
   margin-bottom: 1rem;
 }
@@ -775,6 +785,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: 0.5rem;
 }
 
+.-mt-4{
+  margin-top: -1rem;
+}
+
 .block{
   display: block;
 }
@@ -883,6 +897,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-6{
   width: 1.5rem;
+}
+
+.w-10{
+  width: 2.5rem;
 }
 
 .max-w-6xl{
@@ -1275,6 +1293,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 1rem;
 }
 
+.p-1{
+  padding: 0.25rem;
+}
+
 .py-3{
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -1365,6 +1387,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 3rem;
 }
 
+.py-0{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
 .pr-1{
   padding-right: 0.25rem;
 }
@@ -1423,6 +1450,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pl-5{
   padding-left: 1.25rem;
+}
+
+.pt-0{
+  padding-top: 0px;
+}
+
+.pt-4{
+  padding-top: 1rem;
 }
 
 .text-left{
@@ -1776,6 +1811,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(156 163 175 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-gray-200:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-700:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
 .hover\:uppercase:hover{
   text-transform: uppercase;
 }
@@ -1886,6 +1931,18 @@ Ensure the default browser behavior of the `hidden` attribute.
     margin-top: 7rem;
   }
 
+  .md\:ml-6{
+    margin-left: 1.5rem;
+  }
+
+  .md\:ml-1{
+    margin-left: 0.25rem;
+  }
+
+  .md\:ml-2{
+    margin-left: 0.5rem;
+  }
+
   .md\:flex{
     display: flex;
   }
@@ -1978,6 +2035,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   .md\:px-3{
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+  }
+
+  .md\:py-4{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .md\:px-6{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .md\:pr-10{
